@@ -2,38 +2,65 @@
 import operator
 import pickle
 
+# fmt: off
 keyboard_layouts = {
-    "QWERTY": ("qwertyuiop" "asdfghjkl;" "zxcvbnm,./"),
+    "QWERTY": ("qwertyuiop"
+               "asdfghjkl;"
+               "zxcvbnm,./"),
     # https://en.wikipedia.org/wiki/Dvorak_keyboard_layout
-    "Dvorak": ("',.pyfgcrl" "aoeuidhtns" ";qjkxbmwvz"),
+    "Dvorak": ("',.pyfgcrl"
+               "aoeuidhtns"
+               ";qjkxbmwvz"),
     # https://en.wikipedia.org/wiki/Dvorak_keyboard_layout#Programmer_Dvorak
-    "Dvorak (Programmer)": (";,.pyfgcrl" "aoeuidhtns" "'qjkxbmwvz"),
+    "Dvorak (Programmer)": (";,.pyfgcrl"
+                            "aoeuidhtns"
+                            "'qjkxbmwvz"),
     # https://colemakmods.github.io/mod-dh/
-    "Colemak Mod-DH": ("qwfpbjluy;" "arstgmneio" "zxcdvkh,./"),
-    "Colemak Mod-DHk": ("qwfpbjluy;" "arstgkneio" "zxcdvmh,./"),
+    "Colemak Mod-DH": ("qwfpbjluy;"
+                       "arstgmneio"
+                       "zxcdvkh,./"),
+    "Colemak Mod-DHk": ("qwfpbjluy;"
+                        "arstgkneio"
+                        "zxcdvmh,./"),
     # https://colemak.com
-    "Colemak": ("qwfpgjluy;" "arstdhneio" "zxcvbkm,./"),
+    "Colemak": ("qwfpgjluy;"
+                "arstdhneio"
+                "zxcvbkm,./"),
     # https://github.com/kaievns/halmak
-    "Halmak": ("wlrbz;qudj" "shnt,.aeoi" "fmvc/gpxky"),
+    "Halmak": ("wlrbz;qudj"
+               "shnt,.aeoi"
+               "fmvc/gpxky"),
     # https://workmanlayout.org
-    "Workman": ("qdrwbjfup;" "ashtgyneoi" "zxmcvkl<>?"),
+    "Workman": ("qdrwbjfup;"
+                "ashtgyneoi"
+                "zxmcvkl<>?"),
     # https://normanlayout.info
-    "Norman": ("qwdfkjurl;" "asetgynioh" "zxcvbpm,./"),
+    "Norman": ("qwdfkjurl;"
+               "asetgynioh"
+               "zxcvbpm,./"),
     # http://mkweb.bcgsc.ca/carpalx/
-    "Carpalx (QFMLWY)": ("qfmlwyuobj" "dstnriaeh;" "zvgcxpk,./"),
+    "Carpalx (QFMLWY)": ("qfmlwyuobj"
+                         "dstnriaeh;"
+                         "zvgcxpk,./"),
     # https://github.com/apsu/canary
-    "Canary": ("wlypbzfou'" "crstgmneia" "qjvdkxh/,."),
+    "Canary": ("wlypbzfou'"
+               "crstgmneia"
+               "qjvdkxh/,."),
 }
 
 penalties = {
-    "same hand": 1,
-    "top row": 2,
-    "inner column, top row (delta)": +4,  # 6
-    "inner column, home row (delta)": +3,  # 3
-    "bottom row": 4,
-    "inner column, bottom row (delta)": +1,  # 5
-    "missing": 10,
+    "same hand": 0,
+    "missing": 5,
+    "same finger": 1,
 }
+
+# From Colemak Mod-DH.
+effort_grid = (
+    3.0, 2.4, 2.0, 2.2, 3.2,   3.2, 2.2, 2.0, 2.4, 3.0,  # Top row
+    1.6, 1.3, 1.1, 1.0, 2.9,   2.9, 1.0, 1.1, 1.3, 1.6,  # Home row
+    3.2, 2.6, 2.3, 1.6, 3.0,   3.0, 1.6, 2.3, 2.6, 3.2,  # Bottom row
+)
+# fmt: on
 
 
 with open("transitions.pickle", "rb") as file:
@@ -60,16 +87,23 @@ for keyboard_name, keyboard_layout in keyboard_layouts.items():
         keyboard_layout[24],
         keyboard_layout[25],
     }
+    keyboards[keyboard_name]["columns"] = [
+        set(keyboard_layout[i::10]) for i in range(10)
+    ]
+    keyboards[keyboard_name]["effort"] = dict(zip(keyboard_layout, effort_grid))
 
 scores = {name: 0 for name in keyboard_layouts}
 keys = {}
 for keyboard_name, keyboard in keyboards.items():
     for (last_key, key), total in transitions.items():
         keys[key] = keys.get(key, 0) + total
+
         score = 0
         if key not in keyboard["all keys"]:
             score += penalties["missing"]
         else:
+            score += keyboard["effort"][key]
+
             same_hand_penalty = 0
             for hand in "left hand", "right hand":
                 if last_key in keyboard[hand] and key in keyboard[hand]:
@@ -77,16 +111,14 @@ for keyboard_name, keyboard in keyboards.items():
                     break
             score += same_hand_penalty
 
-            if key in keyboard["top row"]:
-                score += penalties["top row"]
-                if key in keyboard["inner columns"]:
-                    score += penalties["inner column, top row (delta)"]
-            elif key in keyboard["bottom row"]:
-                score += penalties["bottom row"]
-                if key in keyboard["inner columns"]:
-                    score += penalties["inner column, bottom row (delta)"]
-            elif key in keyboard["inner columns"]:  # Must be home row
-                score += penalties["inner column, home row (delta)"]
+            same_finger_penalty = 0
+            if last_key != key:
+                for column in keyboard["columns"]:
+                    if all(key in column for key in (last_key, key)):
+                        same_finger_penalty = penalties["same finger"]
+                        break
+            score += same_finger_penalty
+
         scores[keyboard_name] += score * total
 
 print("Key usage (higher is better):")
@@ -109,4 +141,4 @@ for name, score in sorted(scores.items(), key=operator.itemgetter(1)):
         diff = 0
     else:
         diff = score - top_score
-    print(f"  {score:,} ({diff/top_score * 100:4.1f}%) : {name}")
+    print(f"  {int(score):,} ({diff/top_score * 100:4.1f}%) : {name}")
