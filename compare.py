@@ -21,6 +21,8 @@ keyboard_layouts = {
     "Norman": ("qwdfkjurl;" "asetgynioh" "zxcvbpm,./"),
     # http://mkweb.bcgsc.ca/carpalx/
     "Carpalx (QFMLWY)": ("qfmlwyuobj" "dstnriaeh;" "zvgcxpk,./"),
+    # https://github.com/apsu/canary
+    "Canary": ("wlypbzfou'" "crstgmneia" "qjvdkxh/,."),
 }
 
 penalties = {
