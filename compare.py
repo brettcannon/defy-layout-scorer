@@ -92,7 +92,7 @@ keyboard_layouts = {
               "zxcvbkm,./"),
     # https://github.com/Apsu/APT
     "APT": ("wgdfbqluoy"
-            "rsthkjneai;"
+            "rsthkjneai"
             "xcmpvz,.'/"),
     # https://github.com/rdavison/graphite-layout
     "Graphite": ("bldwz"  "'fouj"
@@ -152,7 +152,7 @@ keyboard_layouts = {name: layout.lower() for name, layout in keyboard_layouts.it
 
 penalties = {
     "same hand": 0,
-    "missing": 0,
+    "missing": 2,
     "same finger": 0,
 }
 
