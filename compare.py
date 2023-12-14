@@ -34,7 +34,7 @@ keyboard_layouts = {
     # https://workmanlayout.org
     "Workman": ("qdrwbjfup;"
                 "ashtgyneoi"
-                "zxmcvkl<>?"),
+                "zxmcvkl,./"),
     # https://normanlayout.info
     "Norman": ("qwdfkjurl;"
                "asetgynioh"
@@ -156,11 +156,20 @@ penalties = {
     "same finger": 0,
 }
 
-# From Colemak Mod-DH.
 effort_grid = (
-    3.0, 2.4, 2.0, 2.2, 3.2,   3.2, 2.2, 2.0, 2.4, 3.0,  # Top row
-    1.6, 1.3, 1.1, 1.0, 2.9,   2.9, 1.0, 1.1, 1.3, 1.6,  # Home row
-    3.2, 2.6, 2.3, 1.6, 3.0,   3.0, 1.6, 2.3, 2.6, 3.2,  # Bottom row
+# From Colemak Mod-DH.
+#     3.0, 2.4, 2.0, 2.2, 3.2,   3.2, 2.2, 2.0, 2.4, 3.0,  # Top row
+#     1.6, 1.3, 1.1, 1.0, 2.9,   2.9, 1.0, 1.1, 1.3, 1.6,  # Home row
+#     3.2, 2.6, 2.3, 1.6, 3.0,   3.0, 1.6, 2.3, 2.6, 3.2,  # Bottom row
+# From Workman.
+#     4.0, 2.0, 2.0, 3.0, 4.0,   4.0, 3.0, 2.0, 2.0, 4.0,  # Top row
+#     1.5, 1.0, 1.0, 1.0, 3.0,   3.0, 1.0, 1.0, 1.0, 1.5,  # Home row
+#     4.0, 4.0, 3.0, 2.0, 4.0,   4.0, 2.0, 3.0, 4.0, 4.0,  # Bottom row
+# Personal.
+     4.0, 2.2, 2.0, 3.0, 4.0,   4.0, 3.0, 2.0, 2.2, 4.0,  # Top row
+     1.5, 1.2, 1.0, 1.0, 2.0,   2.0, 1.0, 1.0, 1.2, 1.5,  # Home row
+     4.0, 4.0, 2.5, 2.0, 4.0,   4.0, 2.0, 2.5, 4.0, 4.0,  # Bottom row
+
 )
 # fmt: on
 

@@ -21,27 +21,16 @@ The lower the score the better (i.e., points are penalties), with each keyboard 
 You can change the values in the `penalties` dict and `efforts` tuple to use your own weights based on your own preferences.
 
 Do note that the scoring is very simple and very much oriented towards a columnar/matrix keyboard layout!
-This was a quick hack to see if [Colemak Mod-DH](https://colemakmods.github.io/mod-dh/) scored well enough for me to keep learning it (which it did).
+Take the time to tweak the effort grid and any other metrics to your personal preference.
 
 The `compare.py` script will also output the most used characters to help you make any decisions about your keyboard layers.
 
 ### Keyboard layouts
 
 The keyboards are stored in the `keyboard_layouts` dict.
+URLs are provided in a comment for each layout if you want to look up more
+information.
 You can add any other keyboards you want and they will automatically be included in any future runs for the `compare.py` script.
-The built-in layouts are:
-
-1. QWERTY
-2. [Dvorak](https://en.wikipedia.org/wiki/Dvorak_keyboard_layout)
-3. [Dvorak (Programmer)](https://en.wikipedia.org/wiki/Dvorak_keyboard_layout#Programmer_Dvorak)
-4. [Colemak](https://colemak.com)
-5. [Colemak Mod-DH](https://colemakmods.github.io/mod-dh/)
-6. [Colemak Mod-DHk](https://colemakmods.github.io/mod-dh/)
-7. [Halmak](https://github.com/kaievns/halmak)
-8. [Workman](https://workmanlayout.org)
-9. [Norman](https://normanlayout.info)
-10. [Carpalx (QFMLWY)](http://mkweb.bcgsc.ca/carpalx/)
-11. [Canary](https://github.com/apsu/canary)
 
 ## Example
 ```text
@@ -49,15 +38,40 @@ Key usage (higher is better):
   e t o a i n s r h l p c d u '\n' m y g f . w b " , v / _ k ( ) - : 1 x ' 0 = 2 3 [ ] j 6 4 q 5 8 > z # 7 ^ * ! 9 ? + { } ` ; % < @ ~ & $ \ | '\t'
 
 Scores (lower is better):
-  3,486,968 ( 0.0%) : Colemak Mod-DH
-  3,488,701 ( 0.0%) : Colemak Mod-DHk
-  3,512,914 ( 0.7%) : Canary
-  3,537,332 ( 1.4%) : Halmak
-  3,538,483 ( 1.5%) : Colemak
-  3,557,923 ( 2.0%) : Norman
-  3,589,561 ( 2.9%) : Workman
-  3,683,999 ( 5.7%) : Carpalx (QFMLWY)
-  3,685,740 ( 5.7%) : Dvorak
-  3,686,445 ( 5.7%) : Dvorak (Programmer)
-  4,110,397 (17.9%) : QWERTY
+  1,619,338 ( 0.0%) : Workman
+  1,641,154 ( 1.3%) : MTGAP’s Layout 2.0
+  1,644,484 ( 1.6%) : Graphite
+  1,644,773 ( 1.6%) : Colemak Mod-DH
+  1,654,541 ( 2.2%) : Capewell
+  1,655,320 ( 2.2%) : Canary
+  1,655,766 ( 2.2%) : Dsend thumbshift
+  1,660,312 ( 2.5%) : Carpalx (QGMLWB)
+  1,664,793 ( 2.8%) : Colemak
+  1,668,011 ( 3.0%) : Norman
+  1,670,890 ( 3.2%) : Soul
+  1,679,443 ( 3.7%) : Colemak Mod-DHk
+  1,681,960 ( 3.9%) : Asset
+  1,684,285 ( 4.0%) : Beakl 4 mod ian 1
+  1,688,283 ( 4.3%) : Hand Down alt ts
+  1,690,256 ( 4.4%) : 3I
+  1,690,604 ( 4.4%) : RSTHD
+  1,692,134 ( 4.5%) : Phynnboi
+  1,698,387 ( 4.9%) : Boo
+  1,704,921 ( 5.3%) : Kaehi
+  1,714,026 ( 5.8%) : Hands Down reference
+  1,726,662 ( 6.6%) : 16-Maks
+  1,732,051 ( 7.0%) : Carpalx (QYLDGB)
+  1,736,475 ( 7.2%) : Halmak
+  1,736,633 ( 7.2%) : Poqtea
+  1,750,658 ( 8.1%) : OneProduct
+  1,766,414 ( 9.1%) : Sturdy
+  1,778,687 ( 9.8%) : Evolved
+  1,790,726 (10.6%) : APT
+  1,802,712 (11.3%) : Carpalx (QFMLWY)
+  1,819,673 (12.4%) : Dvorak
+  1,819,673 (12.4%) : Dvorak (Programmer)
+  1,839,138 (13.6%) : Blick DHIATENSOR
+  1,857,501 (14.7%) : Engram
+  2,055,836 (27.0%) : Minimak
+  2,418,032 (49.3%) : QWERTY
 ```
