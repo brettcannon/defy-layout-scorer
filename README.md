@@ -21,7 +21,8 @@ The lower the score the better (i.e., points are penalties), with each keyboard 
 You can change the values in the `penalties` dict and `efforts` tuple to use your own weights based on your own preferences.
 
 Do note that the scoring is very simple and very much oriented towards a columnar/matrix keyboard layout!
-Take the time to tweak the effort grid and any other metrics to your personal preference.
+Take the time to tweak the effort grid and any other metrics to your personal preference as the settings are set to my personal preferences.
+The effort grid from Colemak Mod-DH and Workman are included as commented-out examples if you want a different starting point.
 
 The `compare.py` script will also output the most used characters to help you make any decisions about your keyboard layers.
 
