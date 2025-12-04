@@ -147,6 +147,10 @@ keyboard_layouts = {
     "Hand Down alt ts": ("wchpv" "'yujq"
                          "rsntg" "kieoa"
                          "xmldb" "zf/,."),
+    # https://github.com/GalileoBlues/Gallium
+    "Gallium": ("bldcv" "jfou,"
+                "nrtsg" "yhaei"
+                "xqmwz" "kp';."),
 }
 
 keyboard_layouts = {name: layout.lower() for name, layout in keyboard_layouts.items()}
