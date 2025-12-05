@@ -162,6 +162,9 @@ keyboard_layouts = {
     "Recurva alt": ("frdpv" "qluoy"
                     "sntcb" "mheai"
                     "zxkgw" "j.;',"),
+    "Focal": ("vlhgk" "qfouj"
+              "srjtb" "ycaei"
+              "zxmdp" "'w.;,"),
 }
 
 keyboard_layouts = {name: layout.lower() for name, layout in keyboard_layouts.items()}
