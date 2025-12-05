@@ -1,4 +1,5 @@
 """Compare various keyboard layouts for the Dygma Defy keyboard."""
+import itertools
 import operator
 import pickle
 import secrets
@@ -151,6 +152,16 @@ keyboard_layouts = {
     "Gallium": ("bldcv" "jfou,"
                 "nrtsg" "yhaei"
                 "xqmwz" "kp';."),
+    # https://sites.google.com/alanreiser.com/handsdown/home/hands-down-neu
+    "Hand Down Neu": ("wfmpv" ".q;'z"
+                      "rsntb" "aeihj"
+                      "xcldg" "-uoyk"),
+    "Recurva": ("frdpv" "qmuoy"
+                "sntcb" ".heai"
+                "zxkgw" "jl;',"),
+    "Recurva alt": ("frdpv" "qluoy"
+                    "sntcb" "mheai"
+                    "zxkgw" "j.;',"),
 }
 
 keyboard_layouts = {name: layout.lower() for name, layout in keyboard_layouts.items()}
@@ -171,9 +182,9 @@ effort_grid = (
 #     1.5, 1.0, 1.0, 1.0, 3.0,   3.0, 1.0, 1.0, 1.0, 1.5,  # Home row
 #     4.0, 4.0, 3.0, 2.0, 4.0,   4.0, 2.0, 3.0, 4.0, 4.0,  # Bottom row
 # Personal.
-     4.0, 2.2, 2.0, 3.0, 4.0,   4.0, 3.0, 2.0, 2.2, 4.0,  # Top row
+     4.0, 2.2, 2.0, 2.0, 4.0,   4.0, 2.0, 2.0, 2.2, 4.0,  # Top row
      1.5, 1.2, 1.0, 1.0, 2.0,   2.0, 1.0, 1.0, 1.2, 1.5,  # Home row
-     4.0, 4.0, 2.5, 2.0, 4.0,   4.0, 2.0, 2.5, 4.0, 4.0,  # Bottom row
+     4.0, 4.0, 3.0, 1.8, 4.0,   4.0, 1.8, 3.0, 4.0, 4.0,  # Bottom row
 
 )
 # fmt: on
@@ -304,7 +315,9 @@ def improve_layout(transitions, best_layout, best_score):
     except KeyboardInterrupt:
         print("\n\nBest layout found:")
         diff = best_score - initial_best_score
-        print(f"{int(best_score):,} ({diff/best_score * 100:4.1f}%): {best_layout}")
+        print(f"{int(best_score):,} ({diff/best_score * 100:4.1f}%)")
+        for row in itertools.batched(itertools.batched(best_layout, 5), 2):
+            print(f"{''.join(row[0])} {''.join(row[1])}")
 
 
 def main():
