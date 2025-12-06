@@ -1,4 +1,5 @@
 """Compare various keyboard layouts for the Dygma Defy keyboard."""
+import collections
 import itertools
 import operator
 import pickle
@@ -76,9 +77,9 @@ keyboard_layouts = {
                            "OANTGMSERI"
                            "QXBPZYW'V;"),
     # https://mathematicalmulticore.wordpress.com/rate-these-keyboard-layouts/
-    "Phynnboi": ("QY.;,JCLFX"
-                 "HOEAUGTSNR"
-                 "P/KIZWDMVB"),
+    "Phynnboi": ("QY.;," "JCLFX"
+                 "HOEAU" "GTSNR"
+                 "P/KIZ" "WDMVB"),
     # https://kennetchaz.github.io/symmetric-typing/soul.html
     "Soul": ("qwldp" "kmuy;"
              "arstg" "fneio"
@@ -185,9 +186,9 @@ effort_grid = (
 #     1.5, 1.0, 1.0, 1.0, 3.0,   3.0, 1.0, 1.0, 1.0, 1.5,  # Home row
 #     4.0, 4.0, 3.0, 2.0, 4.0,   4.0, 2.0, 3.0, 4.0, 4.0,  # Bottom row
 # Personal.
-     4.0, 2.2, 2.0, 2.0, 4.0,   4.0, 2.0, 2.0, 2.2, 4.0,  # Top row
+     4.0, 3.0, 2.0, 2.0, 4.0,   4.0, 2.0, 2.0, 3.0, 4.0,  # Top row
      1.5, 1.2, 1.0, 1.0, 2.0,   2.0, 1.0, 1.0, 1.2, 1.5,  # Home row
-     4.0, 4.0, 3.0, 1.8, 4.0,   4.0, 1.8, 3.0, 4.0, 4.0,  # Bottom row
+     2.0, 2.5, 2.5, 1.5, 4.0,   4.0, 1.5, 2.5, 2.5, 2.0,  # Bottom row
 
 )
 # fmt: on
@@ -246,11 +247,22 @@ def score_keyboard(keyboard_layout, transitions):
 
     return total_score
 
+CHAR_KEY_MAP = {"_":'-', "+":'=',
+                "{": '[', "}": ']', "|":'\\',
+                ":": ';', '"': "'",
+                "<": ',', ">": '.', "?":'/',}
 
 def key_frequency(transitions):
-    keys = {}
+    characters = collections.defaultdict(int)
     for (last_key, key), total in transitions.items():
-        keys[key] = keys.get(key, 0) + total
+        characters[key] += total
+
+    keys = collections.defaultdict(int)
+    for char, freq in characters.items():
+        try:
+            keys[CHAR_KEY_MAP.get(char, char)] += freq
+        except KeyError:
+            continue
 
     print("Key usage (higher is better):")
     key_ranking = list(
